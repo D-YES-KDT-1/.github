@@ -185,6 +185,82 @@ TT Market은 다양한 데이터 분석을 통해 농산물 가격을 예측하�
 - 인프라 설정 및 CI/CD 파이프라인 구축
 
 
+
+---
+
+
+<br />
+<br />
+
+## Architecture Diagram
+<img width="1171" height="844" alt="제목 없는 다이어그램 drawio" src="https://github.com/user-attachments/assets/ad022d0c-4711-4443-86fd-ea8519f4d078" />
+EC2에서 Docker로 서비스 운영하고, 
+GitHub Actions로 배포를 
+자동화했습니다. 
+
+백엔드는 Spring이 담당하며, 
+캐시·세션은 Redis로 관리했습니다.
+
+<br />
+<br />
+
+---
+
+
+
+<br />
+<br />
+
+## ML 기반 2주 가격 예측 파이프라인
+<img width="1920" height="1080" alt="유경우 - 포트폴리오 (1)" src="https://github.com/user-attachments/assets/20163c17-775c-472a-b4d4-fde01fb6245b" />
+<img width="1920" height="1080" alt="유경우 - 포트폴리오 (2)" src="https://github.com/user-attachments/assets/e7178e8d-3443-4d6a-9257-e87e59a7e4fb" />
+<img width="1920" height="1080" alt="유경우 - 포트폴리오 (3)" src="https://github.com/user-attachments/assets/5bdc917a-8ebb-46d7-817f-fdc7993eb6c9" />
+요약: 공공 데이터 + 기상 변수로 농산물 향후 2주 가격을 예측하는 LSTM(Keras/TensorFlow) 파이프라인.
+
+목표/모델: 공공 데이터 기반 2주 가격 예측, LSTM 채택
+
+피처링: 가격과 상관 높은 기상 변수 선별, 공선성 제거, 품목별 최대 시차(lag) 산출
+
+예: 양파 — 기온 +120일, 강수량 +83일
+
+검증: Granger causality / 상관 히트맵 / 교차상관으로 변수-가격 관계 검증
+
+결과: 테스트 구간에서 실제 가격을 안정적으로 추종, 급등·급락 구간도 방향성 일치
+<details> 
+    <summary><strong>Pipeline (Mermaid)</strong></summary>
+    
+```mermaid
+flowchart LR
+    A["공공 가격/기상 데이터 수집"] --> B["정제/정렬/결측치 처리"]
+    B --> C["상관/공선성 분석"]
+    C --> D["품목별 시차(Lag) 탐색"]
+    D --> E["Train/Validation Split"]
+    E --> F["LSTM 학습 (Keras/TensorFlow)"]
+    F --> G["백테스트/평가"]
+    G --> H["예측 결과 서빙 (API/배치)"]
+```
+
+</details>
+
+<details> 
+    <summary><strong>간단 예시 코드 (의사 코드)</strong></summary>
+    
+    # 1) 피처 준비
+    X, y = make_supervised_series(price, weather, lags={"temp":120, "rain":83})
+    
+    # 2) 모델
+    model = build_lstm(input_shape=X.shape[1:])
+    model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=E)
+    
+    # 3) 평가/서빙
+    pred = model.predict(X_val)
+    plot_backtest(y_val, pred)   # 추세/방향성 확인
+
+</details>
+
+<br />
+<br />
+
 ---
 
 
