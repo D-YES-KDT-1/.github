@@ -212,9 +212,10 @@ GitHub Actions로 배포를
 <br />
 
 ## ML 기반 2주 가격 예측 파이프라인
-<img width="1920" height="1080" alt="유경우 - 포트폴리오 (1)" src="https://github.com/user-attachments/assets/20163c17-775c-472a-b4d4-fde01fb6245b" />
-<img width="1920" height="1080" alt="유경우 - 포트폴리오 (2)" src="https://github.com/user-attachments/assets/e7178e8d-3443-4d6a-9257-e87e59a7e4fb" />
-<img width="1920" height="1080" alt="유경우 - 포트폴리오 (3)" src="https://github.com/user-attachments/assets/5bdc917a-8ebb-46d7-817f-fdc7993eb6c9" />
+<img width="1920" height="1080" alt="유경우 - 포트폴리오" src="https://github.com/user-attachments/assets/9caa8468-c821-4363-8dda-8a59e455c45e" />
+<img width="1920" height="1080" alt="유경우 - 포트폴리오 (1)" src="https://github.com/user-attachments/assets/bc278bbf-30ed-4385-8bcc-eb09282deb46" />
+<img width="1920" height="1080" alt="유경우 - 포트폴리오 (2)" src="https://github.com/user-attachments/assets/c763ac27-4b06-4364-a9dd-b6272fea041d" />
+
 요약: 공공 데이터 + 기상 변수로 농산물 향후 2주 가격을 예측하는 LSTM(Keras/TensorFlow) 파이프라인.
 
 목표/모델: 공공 데이터 기반 2주 가격 예측, LSTM 채택
